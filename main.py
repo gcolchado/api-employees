@@ -18,6 +18,7 @@ def get_employees():
     cursor = mydb.cursor()
     cursor.execute("SELECT * FROM employees")
     result = cursor.fetchall()
+    cursor.close()
     return {"employees": result}
 
 # Get an employee by ID
@@ -26,6 +27,7 @@ def get_employee(id: int):
     cursor = mydb.cursor()
     cursor.execute(f"SELECT * FROM employees WHERE id = {id}")
     result = cursor.fetchone()
+    cursor.close()
     return {"employee": result}
 
 # Add a new employee
@@ -38,6 +40,7 @@ def add_employee(item:schemas.Item):
     val = (name, age)
     cursor.execute(sql, val)
     mydb.commit()
+    cursor.close()
     return {"message": "Employee added successfully"}
 
 # Modify an employee
@@ -50,6 +53,7 @@ def update_employee(id:int, item:schemas.Item):
     val = (name, age, id)
     cursor.execute(sql, val)
     mydb.commit()
+    cursor.close()
     return {"message": "Employee modified successfully"}
 
 # Delete an employee by ID
@@ -58,4 +62,5 @@ def delete_employee(id: int):
     cursor = mydb.cursor()
     cursor.execute(f"DELETE FROM employees WHERE id = {id}")
     mydb.commit()
+    cursor.close()
     return {"message": "Employee deleted successfully"}
